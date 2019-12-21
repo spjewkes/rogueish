@@ -14,7 +14,7 @@ def main_loop():
     """
     entities = list()
     entities.append(Entity("Player", ComponentKeyboardControlled(), ComponentPosition(40, 25),
-                           ComponentSprite('@', 255, 255, 255)))
+                           ComponentSprite('@', (255, 255, 255))))
 
     keyboard = SystemKeyboard()
     display = SystemDisplay(80, 50)
