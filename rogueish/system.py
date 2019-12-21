@@ -50,6 +50,8 @@ class SystemDisplay(object):
         """
         Handle the display update using the entities capable of being rendered.
         """
+        self.console.clear()
+
         for e in entities:
             if e.has(ComponentPosition) and e.has(ComponentSprite):
                 position = e.get(ComponentPosition).get()
