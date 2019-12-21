@@ -17,12 +17,6 @@ class ComponentPosition(object):
         """
         self.pos = (x, y)
 
-    def get(self):
-        """
-        Fetch the position
-        """
-        return self.pos
-
 class ComponentSize(object):
     """
     Component for defining those with size.
@@ -32,32 +26,13 @@ class ComponentSize(object):
     def __init__(self, width=1, height=1):
         self.size = (width, height)
 
-    def get(self):
-        """
-        Fetch the size
-        """
-        return self.size
-
 class ComponentSprite(object):
     """
     Component for sprite.
     """
-    def __init__(self, char, fg, bg=(0, 0, 0)):
+    def __init__(self, char, color):
         self.char = char
-        self.fg = fg
-        self.bg = bg
-
-    def get_char(self):
-        """
-        Return character used for this sprite.
-        """
-        return self.char
-
-    def get_color(self):
-        """
-        Return color to be used for this sprite.
-        """
-        return self.fg
+        self.color = color
 
 class ComponentRoom(object):
     """

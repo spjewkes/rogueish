@@ -25,7 +25,7 @@ class SystemKeyboard(object):
 
         for e in entities:
             if e.has(ComponentPosition) and e.has(ComponentKeyboardControlled):
-                x, y = e.get(ComponentPosition).get()
+                x, y = e.get(ComponentPosition).pos
                 for event in events:
                     if event.type == "KEYDOWN":
                         if event.scancode == tcod.event.SCANCODE_UP:
@@ -41,7 +41,7 @@ class SystemKeyboard(object):
                             self.quit = True
                     elif event.type == "QUIT":
                         self.quit = True
-                e.get(ComponentPosition).set(x, y)
+                e.get(ComponentPosition).pos = (x, y)
 
 class SystemDisplay(object):
     """
@@ -61,9 +61,9 @@ class SystemDisplay(object):
 
         for e in entities:
             if e.has(ComponentPosition) and e.has(ComponentSprite):
-                position = e.get(ComponentPosition).get()
-                char = e.get(ComponentSprite).get_char()
-                color = e.get(ComponentSprite).get_color()
+                position = e.get(ComponentPosition).pos
+                char = e.get(ComponentSprite).char
+                color = e.get(ComponentSprite).color
                 self.console.print(*position, string=char, fg=color)
 
         tcod.console_flush()
