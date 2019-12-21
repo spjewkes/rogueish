@@ -38,13 +38,13 @@ class ComponentRoom(object):
     """
     Component for a room.
     """
-    def __init__(self, wall, wall_fg_color, wall_bg_color, floor='.', floor_fg_color=(48, 48, 48), floor_bg_color=(0, 0, 0)):
+    def __init__(self, wall, wall_fg, wall_bg, floor='.', floor_fg=(48, 48, 48), floor_bg=(0, 0, 0)):
         self.wall = wall
-        self.wall_fg_color = wall_fg_color
-        self.wall_bg_color = wall_bg_color
+        self.wall_fg = wall_fg
+        self.wall_bg = wall_bg
         self.floor = floor
-        self.floor_fg_color = floor_fg_color
-        self.floor_bg_color = floor_bg_color
+        self.floor_fg = floor_fg
+        self.floor_bg = floor_bg
 
 class ComponentKeyboardControlled(object):
     """

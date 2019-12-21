@@ -40,4 +40,4 @@ class Entity(object):
         Returns boolean to indicate whether a component of a specified type exists
         in this entity.
         """
-        return self.get(component_class) is not None
+        return component_class in self._components
