@@ -31,7 +31,6 @@ class ComponentSprite(object):
         self.char = char
         self.color = (red, green, blue)
 
-
     def get_char(self):
         """
         Return character used for this sprite.
