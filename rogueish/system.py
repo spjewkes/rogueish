@@ -6,8 +6,8 @@ This module defines all system classes.
 
 import tdl
 
-from component import ComponentPosition, ComponentSprite, ComponentKeyboardControlled
-from entity import Entity
+from rogueish.component import ComponentPosition, ComponentSprite, ComponentKeyboardControlled
+from rogueish.entity import Entity
 
 class SystemKeyboard(object):
     """

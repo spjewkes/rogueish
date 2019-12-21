@@ -4,9 +4,9 @@
 Main entry point for the program.
 """
 
-from system import SystemKeyboard, SystemDisplay
-from component import ComponentPosition, ComponentSprite, ComponentKeyboardControlled
-from entity import Entity
+from rogueish.system import SystemKeyboard, SystemDisplay
+from rogueish.component import ComponentPosition, ComponentSprite, ComponentKeyboardControlled
+from rogueish.entity import Entity
 
 def main_loop():
     """
