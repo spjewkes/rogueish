@@ -21,6 +21,9 @@ def main_loop():
 
     systems = (keyboard, display)
 
+    # Display first frame before hitting game loop
+    display.update(entities)
+
     while not keyboard.quit:
         for system in systems:
             system.update(entities)
