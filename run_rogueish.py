@@ -4,7 +4,7 @@
 Main entry point for the program.
 """
 
-from rogueish.system import SystemKeyboard, SystemPhysics, SystemDisplay
+from rogueish.system import SystemKeyboard, SystemStaticCollisions, SystemDynamics, SystemDisplay
 from rogueish.component import ComponentPosition, ComponentDynamics, ComponentSprite, ComponentKeyboardControlled, \
     ComponentTile
 from rogueish.entity import Entity
@@ -90,10 +90,11 @@ def main_loop():
     build_chars(entities)
 
     keyboard = SystemKeyboard()
-    physics = SystemPhysics(80, 50, entities)
+    static_physics = SystemStaticCollisions(80, 50, entities)
+    dynamics = SystemDynamics()
     display = SystemDisplay(80, 50)
 
-    systems = (keyboard, physics, display)
+    systems = (keyboard, static_physics, dynamics, display)
 
     # Display first frame before hitting game loop
     display.update(entities)

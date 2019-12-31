@@ -44,9 +44,9 @@ class SystemKeyboard(object):
                         self.quit = True
                 e.get(ComponentDynamics).velocity = (x, y)
 
-class SystemPhysics(object):
+class SystemStaticCollisions(object):
     """
-    Handle physics.
+    Handle collisions with static objects
     """
     def __init__(self, width, height, entities):
         # Get array of tiles in world to make it easier for this system to check
@@ -64,12 +64,29 @@ class SystemPhysics(object):
         """
         for e in entities:
             if e.has(ComponentPosition) and e.has(ComponentDynamics):
-                # Calculate new position of object and only move there if there's a tile that isn't solid
+                # If there's no tile or the tile is solid then the entity stops
                 position = e.get(ComponentPosition)
-                new_pos_x, new_pos_y = tuple(np.add(position.pos, e.get(ComponentDynamics).velocity))
+                dynamics = e.get(ComponentDynamics)
+                new_pos_x, new_pos_y = tuple(np.add(position.pos, dynamics.velocity))
                 e = self.world[new_pos_x][new_pos_y]
-                if e.has(ComponentTile) and not e.get(ComponentTile).solid:
-                    position.pos = (new_pos_x, new_pos_y)
+                if not e.has(ComponentTile) or e.get(ComponentTile).solid:
+                    dynamics.velocity = (0, 0)
+
+class SystemDynamics(object):
+    """
+    Handle velocities of entities. This should be done after any collision systems have been applied.
+    """
+    def __init__(self):
+        pass
+
+    def update(self, entities):
+        """
+        Apply an entity's dynamics to its position.
+        """
+        for e in entities:
+            if e.has(ComponentPosition) and e.has(ComponentDynamics):
+                position = e.get(ComponentPosition)
+                position.pos = tuple(np.add(position.pos, e.get(ComponentDynamics).velocity))
 
 class SystemDisplay(object):
     """
