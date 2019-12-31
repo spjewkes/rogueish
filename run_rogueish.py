@@ -4,8 +4,8 @@
 Main entry point for the program.
 """
 
-from rogueish.system import SystemKeyboard, SystemDisplay
-from rogueish.component import ComponentPosition, ComponentSprite, ComponentKeyboardControlled, ComponentTile
+from rogueish.system import SystemKeyboard, SystemPhysics, SystemDisplay
+from rogueish.component import ComponentPosition, ComponentDynamics, ComponentSprite, ComponentKeyboardControlled, ComponentTile
 from rogueish.entity import Entity
 
 def build_world(entities):
@@ -75,7 +75,7 @@ def build_chars(entities):
     """
     Add player character and NPCs to world.
     """
-    entities.append(Entity("Player", ComponentKeyboardControlled(), ComponentPosition(40, 25),
+    entities.append(Entity("Player", ComponentKeyboardControlled(), ComponentPosition(40, 25), ComponentDynamics(),
                            ComponentSprite('@', (255, 255, 255))))
 
 def main_loop():
@@ -87,9 +87,10 @@ def main_loop():
     build_chars(entities)
 
     keyboard = SystemKeyboard()
+    physics = SystemPhysics()
     display = SystemDisplay(80, 50)
 
-    systems = (keyboard, display)
+    systems = (keyboard, physics, display)
 
     # Display first frame before hitting game loop
     display.update(entities)

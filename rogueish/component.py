@@ -17,6 +17,13 @@ class ComponentPosition(object):
         """
         self.pos = (x, y)
 
+class ComponentDynamics(object):
+    """
+    Defines the dynamics of an object.
+    """
+    def __init__(self):
+        self.velocity = (0, 0)
+
 class ComponentSprite(object):
     """
     Component for sprite.

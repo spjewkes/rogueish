@@ -6,8 +6,9 @@ This module defines all system classes.
 
 import tcod
 import tcod.event
+import numpy as np
 
-from rogueish.component import ComponentPosition, ComponentSprite, ComponentKeyboardControlled, ComponentTile
+from rogueish.component import ComponentPosition, ComponentDynamics, ComponentSprite, ComponentKeyboardControlled, ComponentTile
 from rogueish.entity import Entity
 
 class SystemKeyboard(object):
@@ -24,24 +25,40 @@ class SystemKeyboard(object):
         events = tcod.event.get()
 
         for e in entities:
-            if e.has(ComponentPosition) and e.has(ComponentKeyboardControlled):
-                x, y = e.get(ComponentPosition).pos
+            if e.has(ComponentDynamics) and e.has(ComponentKeyboardControlled):
+                x, y = (0, 0)
                 for event in events:
                     if event.type == "KEYDOWN":
                         if event.scancode == tcod.event.SCANCODE_UP:
-                            y -= 1
+                            y = -1
                         elif event.scancode == tcod.event.SCANCODE_DOWN:
-                            y += 1
+                            y = 1
                         elif event.scancode == tcod.event.SCANCODE_LEFT:
-                            x -= 1
+                            x = -1
                         elif event.scancode == tcod.event.SCANCODE_RIGHT:
-                            x += 1
+                            x = 1
                         elif event.scancode == tcod.event.SCANCODE_Q or \
                              event.scancode == tcod.event.SCANCODE_ESCAPE:
                             self.quit = True
                     elif event.type == "QUIT":
                         self.quit = True
-                e.get(ComponentPosition).pos = (x, y)
+                e.get(ComponentDynamics).velocity = (x, y)
+
+class SystemPhysics(object):
+    """
+    Handle physics.
+    """
+    def __init__(self):
+        pass
+
+    def update(self, entities):
+        """
+        Process any objects with position and dynamics.
+        """
+        for e in entities:
+            if e.has(ComponentPosition) and e.has(ComponentDynamics):
+                position = e.get(ComponentPosition)
+                position.pos = tuple(np.add(position.pos, e.get(ComponentDynamics).velocity))
 
 class SystemDisplay(object):
     """
