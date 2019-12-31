@@ -87,7 +87,7 @@ def main_loop():
     build_chars(entities)
 
     keyboard = SystemKeyboard()
-    physics = SystemPhysics()
+    physics = SystemPhysics(80, 50, entities)
     display = SystemDisplay(80, 50)
 
     systems = (keyboard, physics, display)

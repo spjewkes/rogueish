@@ -48,17 +48,28 @@ class SystemPhysics(object):
     """
     Handle physics.
     """
-    def __init__(self):
-        pass
-
+    def __init__(self, width, height, entities):
+        # Get array of tiles in world to make it easier for this system to check
+        # static collisions
+        dummy_entity = Entity("Dummy")
+        self.world = [[dummy_entity for y in range(height)] for x in range(width)]
+        for e in entities:
+            if e.has(ComponentPosition) and e.has(ComponentTile):
+                pos = e.get(ComponentPosition).pos
+                self.world[pos[0]][pos[1]] = e
+                
     def update(self, entities):
         """
         Process any objects with position and dynamics.
         """
         for e in entities:
             if e.has(ComponentPosition) and e.has(ComponentDynamics):
+                # Calculate new position of object and only move there if there's a tile that isn't solid
                 position = e.get(ComponentPosition)
-                position.pos = tuple(np.add(position.pos, e.get(ComponentDynamics).velocity))
+                new_pos_x, new_pos_y = tuple(np.add(position.pos, e.get(ComponentDynamics).velocity))
+                e = self.world[new_pos_x][new_pos_y]
+                if e.has(ComponentTile) and not e.get(ComponentTile).solid:
+                    position.pos = (new_pos_x, new_pos_y)
 
 class SystemDisplay(object):
     """
