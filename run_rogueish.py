@@ -5,7 +5,8 @@ Main entry point for the program.
 """
 
 from rogueish.system import SystemKeyboard, SystemPhysics, SystemDisplay
-from rogueish.component import ComponentPosition, ComponentDynamics, ComponentSprite, ComponentKeyboardControlled, ComponentTile
+from rogueish.component import ComponentPosition, ComponentDynamics, ComponentSprite, ComponentKeyboardControlled, \
+    ComponentTile
 from rogueish.entity import Entity
 
 def build_world(entities):
@@ -67,9 +68,11 @@ def build_world(entities):
     for y in range(50):
         for x in range(80):
             if world[y * 80 + x] == 'x':
-                entities.append(Entity("Rock", ComponentPosition(x, y), ComponentTile('#', (30, 180, 180), (0, 90, 90), True)))
+                entities.append(Entity("Rock", ComponentPosition(x, y),
+                                       ComponentTile('#', (30, 180, 180), (0, 90, 90), True)))
             else:
-                entities.append(Entity("Room", ComponentPosition(x, y), ComponentTile('.', (180, 180, 180), (60, 60, 60), False)))
+                entities.append(Entity("Room", ComponentPosition(x, y),
+                                       ComponentTile('.', (180, 180, 180), (60, 60, 60), False)))
 
 def build_chars(entities):
     """
