@@ -7,7 +7,7 @@ This module defines all system classes.
 import tcod
 import tcod.event
 
-from rogueish.component import ComponentPosition, ComponentSize, ComponentSprite, ComponentKeyboardControlled, ComponentRoom
+from rogueish.component import ComponentPosition, ComponentSprite, ComponentKeyboardControlled, ComponentTile
 from rogueish.entity import Entity
 
 class SystemKeyboard(object):
@@ -59,27 +59,13 @@ class SystemDisplay(object):
         """
         self.console.clear()
 
-        # Handle background objects
+        # Handle tiles
         for e in entities:
-            if e.has(ComponentPosition) and e.has(ComponentSize) and e.has(ComponentRoom):
-                position = e.get(ComponentPosition).pos
-                size = e.get(ComponentSize).size
+            if e.has(ComponentPosition) and e.has(ComponentTile):
+                position = e.get(ComponentPosition)
+                tile = e.get(ComponentTile)
 
-                wall = e.get(ComponentRoom).wall
-                wall_fg = e.get(ComponentRoom).wall_fg
-                wall_bg = e.get(ComponentRoom).wall_bg
-
-                floor = e.get(ComponentRoom).floor
-                floor_fg = e.get(ComponentRoom).floor_fg
-                floor_bg = e.get(ComponentRoom).floor_bg
-
-                self.console.draw_rect(*position, *size, ch=ord(floor), fg=floor_fg, bg=floor_bg)
-                for x in range(size[0]):
-                    self.console.print(position[0] + x, position[1], string=wall, fg=wall_fg, bg=wall_bg)
-                    self.console.print(position[0] + x, position[1] + size[1] - 1, string=wall, fg=wall_fg, bg=wall_bg)
-                for y in range(size[1]):
-                    self.console.print(position[0], position[1] + y, string=wall, fg=wall_fg, bg=wall_bg)
-                    self.console.print(position[0] + size[0] - 1, position[1] + y, string=wall, fg=wall_fg, bg=wall_bg)
+                self.console.print(position.pos[0], position.pos[1], string=tile.char, fg=tile.color_fg, bg=tile.color_bg)
 
         # Handle foreground objects
         for e in entities:

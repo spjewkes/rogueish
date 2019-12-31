@@ -17,15 +17,6 @@ class ComponentPosition(object):
         """
         self.pos = (x, y)
 
-class ComponentSize(object):
-    """
-    Component for defining those with size.
-    This is used for defining components with a specific size. Some components
-    such as sprite will implicitly have a size of 1x1 and will not require this.
-    """
-    def __init__(self, width=1, height=1):
-        self.size = (width, height)
-
 class ComponentSprite(object):
     """
     Component for sprite.
@@ -34,17 +25,15 @@ class ComponentSprite(object):
         self.char = char
         self.color = color
 
-class ComponentRoom(object):
+class ComponentTile(object):
     """
-    Component for a room.
+    Component for describing a tile.
     """
-    def __init__(self, wall, wall_fg, wall_bg, floor='.', floor_fg=(48, 48, 48), floor_bg=(0, 0, 0)):
-        self.wall = wall
-        self.wall_fg = wall_fg
-        self.wall_bg = wall_bg
-        self.floor = floor
-        self.floor_fg = floor_fg
-        self.floor_bg = floor_bg
+    def __init__(self, char, color_fg, color_bg, solid):
+        self.char = char
+        self.color_fg = color_fg
+        self.color_bg = color_bg
+        self.solid = solid
 
 class ComponentKeyboardControlled(object):
     """

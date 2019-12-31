@@ -5,18 +5,86 @@ Main entry point for the program.
 """
 
 from rogueish.system import SystemKeyboard, SystemDisplay
-from rogueish.component import ComponentPosition, ComponentSize, ComponentSprite, ComponentKeyboardControlled, ComponentRoom
+from rogueish.component import ComponentPosition, ComponentSprite, ComponentKeyboardControlled, ComponentTile
 from rogueish.entity import Entity
+
+def build_world(entities):
+    """
+    Add world content to entities.
+    """
+    world = ""
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxx                                                            xxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    world += "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+    for y in range(50):
+        for x in range(80):
+            if world[y * 80 + x] == 'x':
+                entities.append(Entity("Rock", ComponentPosition(x, y), ComponentTile('#', (30, 180, 180), (0, 90, 90), True)))
+            else:
+                entities.append(Entity("Room", ComponentPosition(x, y), ComponentTile('.', (180, 180, 180), (60, 60, 60), False)))
+
+def build_chars(entities):
+    """
+    Add player character and NPCs to world.
+    """
+    entities.append(Entity("Player", ComponentKeyboardControlled(), ComponentPosition(40, 25),
+                           ComponentSprite('@', (255, 255, 255))))
 
 def main_loop():
     """
     Execute the main game loop.
     """
     entities = list()
-    entities.append(Entity("Player", ComponentKeyboardControlled(), ComponentPosition(40, 25),
-                           ComponentSprite('@', (255, 255, 255))))
-    entities.append(Entity("Room", ComponentPosition(10, 10), ComponentSize(60, 30),
-                           ComponentRoom('#', (180, 32, 32), (0, 0, 0))))
+    build_world(entities)
+    build_chars(entities)
 
     keyboard = SystemKeyboard()
     display = SystemDisplay(80, 50)
